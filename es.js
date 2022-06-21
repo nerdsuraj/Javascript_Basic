@@ -1,88 +1,77 @@
-// 3.1 async/await
+// Asynchronous iterator
+// Template string for non escape sequence
+// Regular expression reverse (look behind) assertion (this article)
+// Regular expression Unicode escape
+// Regular expression s/dotAll mode
+// Regular expression named capture group
+// Object expansion operator
+// Promise.prototype.finally
 
-  async function init() {
-    console.log('start')
-    await this.testSync()
-    console.log('End')
+
+// -------------------------------------------------
+
+// asynchronous iterator
+// ES2018 introduces asynchronous iterators, just like regular iterators, except that the next() method returns a Promise. Therefore, await can be used with the for...of loop to run asynchronous operations in a serial manner. For example:
+
+async function process(array) {
+  for await (let i of array) {
+    doSomething(i);
   }
-  this.init()
-  async function testSync() {
-    const response = await new Promise(resolve => {
-      setTimeout(() => {
-          resolve("async await test...");
-        }, 1000);
-    });
-    console.log(response);
-  }
-
-
-//   Object.keys()
-
-  var obj = { foo: "bar", baz: 42 };
-  Object.keys(obj)
-  // ["foo", "baz"]
-
-
-//  Object.values()
-
-var obj = { foo: "bar", baz: 42 };
-Object.values(obj)
-// ["bar", 42]
-
-// Object.entries()
-// The Object.entries method returns an array of key value pairs of all enumerable properties of the parameter object itself (excluding inheritance).
-
-var obj = { foo: 'bar', baz: 42 };
-Object.entries(obj)
-// [ ["foo", "bar"], ["baz", 42] ]
-
-
-const obj1 = {a: 1, b: 2, c: 3}
-for(let [key,value] of Object.entries(obj1)){
-    console.log(`key: ${key} value:${value}`)
 }
-//key:a value:1
-//key:b value:2
-//key:c value:3
 
-var obj = { foo: 'bar', baz: 42 };
-var map = new Map(Object.entries(obj));
-map // Map { foo: "bar", baz: 42 }
+// template string of non escape sequence
+// Tags allow you to parse Template Strings with functions. The first parameter of the tag function contains an array of string values. The rest of the parameters are expression dependent. Finally, your function can return the processed string (or it can return something completely different).
 
+function foo(str) {
+    return str[0].toUpperCase();
+}
 
-// Object.getOwnPropertyDescriptors()
-// The Object.getOwnPropertyDescriptor method returns an object (descriptor). ES6 introduces the Object.getOwnPropertyDescriptors method, which returns the description object of all its own properties (non inherited properties) of the specified object.
+foo`justjavac`; // Output JUSTJAVAC
+foo`Xyz`; // Output XYZ
 
-const obj = {
-  foo: 123,
-  get bar() { return 'abc' }
+// regular expression named capture group
+const
+ // reDate = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/,
+  match  = reDate.exec('2018-04-30'),
+  year   = match.groups.year,  // 2018
+  month  = match.groups.month, // 04
+  day    = match.groups.day;   // 30
+ 
+const
+  reDate = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/,
+  d      = '2018-04-30',
+  usDate = d.replace(reDate, '$<month>-$<day>-$<year>');
+
+//   object expansion operator
+let a = [1,2,3];
+let b = [0, ...a, 4]; // [0,1,2,3,4]
+ 
+let obj = { a: 1, b: 2 };
+let obj2 = { ...obj, c: 3 }; // { a:1, b:2, c:3 }
+let obj3 = { ...obj, a: 3 }; // { a:3, b:2 }
+let object = {
+  a: '01', b: '02'
 };
  
-Object.getOwnPropertyDescriptors(obj)
-// { foo:
-//    { value: 123,
-//      writable: true,
-//      enumerable: true,
-//      configurable: true },
-//   bar:
-//    { get: [Function: bar],
-//      set: undefined,
-//      enumerable: true,
-//      configurable: true } }
-// In the above code, the Object.getOwnProperDescriptors method returns an object. The property names of all the original objects are the property names of the object, and the corresponding property values are the property description objects.
-// The main purpose of this method is to solve the problem that Object.assign() can't copy get and set attributes correctly.
-
-const source = {
-  set foo(value) {
-    console.log(value);
-  }
+let newObject = {
+  c: '03',
+  ...object
 };
  
-const target1 = {};
-Object.assign(target1, source);
- 
-Object.getOwnPropertyDescriptor(target1, 'foo')
-// { value: undefined,
-//   writable: true,
-//   enumerable: true,
-//   configurable: true }
+console.log(newObject); //{c: "03", a: "01", b: "02"}
+
+// Promise.finally()
+// A Promise call chain either successfully reaches the last. then(), or fails to trigger. catch(). In some cases, you want to run the same code no matter whether Promise runs successfully or fails, such as clearing, deleting conversations, closing database connections, etc.
+
+function doSomething() {
+  doSomething1()
+  .then(doSomething2)
+  .then(doSomething3)
+  .catch(err => {
+    console.log(err);
+  })
+  .finally(() => {
+    // finish here!
+  });
+}
+
