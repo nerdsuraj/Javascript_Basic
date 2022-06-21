@@ -133,3 +133,15 @@ var objKey;
 // ["bar", 42]
 
 
+// ES7 FEATURES ARE ADDED 
+
+let arr = ['react', 'angular', 'vue'];
+ 
+if (arr.includes('react'))
+{
+    console.log('react existence');
+}
+
+
+console.log(2**10);// Output 1024
+console.log(Math.pow(2, 10)) // Output 1024
