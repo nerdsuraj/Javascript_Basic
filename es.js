@@ -1,147 +1,88 @@
-// function multiply(a, b = 2) {
-//   return a * b;
-// }
+// 3.1 async/await
 
-// console.log(multiply(5));
-// // expected output: 10
-// --------------------------------------------------
-// var Template_Literals;
-// // In ES6, we can use a new syntax ${PARAMETER} inside of the back-ticked string.
-// let firstName = "smita";
-// let lastName = "shinde";
-// // console.log(`Your name is ${firstName} ${lastName}`);
-
-// console.log(`my name is ${firstName}`);
-
-
-// ------------------------------------------------------------
-// var Multi_line_Strings;
-
-// let poemData = `Johny Johny Yes Papa,
-//                 Eating sugar?  No, papa!
-//                 Telling lies? No, papa!
-//                 Open your mouth Ah, ah, ah`;
-
-// console.log(poemData)
-
-// ---------------------------------------------------------------
-// var spread_operator;
-
-// var arr1 = [0, 1, 2];
-// var arr2 = [3, 4, 5];
-// var arr3 = [...arr1, ...arr2]; // Append all elements in arr2 after arr1 and returnb
-
-// var arr3 = [...arr1, ...arr2];
-
-// // Equate to
-
-// console.log(arr3);
-// var arr4 = arr1.concat(arr2);
-
-// console.log(arr4)
-
-// var obj1 = {
-//   foo: "bar",
-//   x: 42,
-// };
-
-// var obj2 = {
-//   foo: "baz",
-//   y: 13,
-// };
-
-// var clonedObj = { ...obj2 };
-// console.log(clonedObj);
-// // // Cloned object: {foo: 'bar', X: 42}
-
-// var mergedObj = { ...obj1, .
+  async function init() {
+    console.log('start')
+    await this.testSync()
+    console.log('End')
+  }
+  this.init()
+  async function testSync() {
+    const response = await new Promise(resolve => {
+      setTimeout(() => {
+          resolve("async await test...");
+        }, 1000);
+    });
+    console.log(response);
+  }
 
 
+//   Object.keys()
 
-var destructuring_assignment;
-// it possible to unpack values from arrays, or properties from objects, into distinct variables.
-
-// let a, b
-// let arr = [10, 20];
-// let [a, b] = arr
-
-// console.log(b);
-// // // // expected output: 10
-
-// console.log(b);
-// // expected output: 20
-
-// let [a, b, , , ...rest] = [10, 20, 30, 40, 50];
-// console.log(a);
-// // // expected output: 10
-
-// console.log(b);
-// // // expected output: 20
-
-// console.log(rest);
-// // expected output: Array[30, 40, 50]
-
-// c
+  var obj = { foo: "bar", baz: 42 };
+  Object.keys(obj)
+  // ["foo", "baz"]
 
 
-let Modules;
-// modules with import and export operands.
-// We can import userID variable and getName method using import statement
+//  Object.values()
 
-// export var userID = 10;
-// export function getName(name) {
-
-// };
-
-// // import { Console } from 'console';
-// import { userID, getName } from 'module';
-// console.log(userID); // 10
-
-
-// es7
-
-// ----------------------------------------------------------------
-var String_includes;
-// The includes() method returns true if a string contains a specified value, otherwise false:
-
-// let text = "Hello world, welcome to the universe.";
-// if (text.includes("world")) {
-//   console.log("yes i am here!!");
-// } else {
-//   console.log("NO i am not!!")
-// }
-
-
-var objKey;
-// Object.keys()
-
-// var obj = {
-//     foo: "bar",
-//     baz: 42
-// };
-
-// console.log(Object.keys(obj))
-// // // ["foo", "baz"]
-
-// var Objectvalues;
-// var obj2 = {
-//   foo: "bar",
-//   baz: 42,
-// };
-
-// console.log(Object.values(obj2));
+var obj = { foo: "bar", baz: 42 };
+Object.values(obj)
 // ["bar", 42]
 
+// Object.entries()
+// The Object.entries method returns an array of key value pairs of all enumerable properties of the parameter object itself (excluding inheritance).
 
-// ES7 FEATURES ARE ADDED 
+var obj = { foo: 'bar', baz: 42 };
+Object.entries(obj)
+// [ ["foo", "bar"], ["baz", 42] ]
 
-let arr = ['react', 'angular', 'vue'];
- 
-if (arr.includes('react'))
-{
-    console.log('react existence');
+
+const obj1 = {a: 1, b: 2, c: 3}
+for(let [key,value] of Object.entries(obj1)){
+    console.log(`key: ${key} value:${value}`)
 }
+//key:a value:1
+//key:b value:2
+//key:c value:3
+
+var obj = { foo: 'bar', baz: 42 };
+var map = new Map(Object.entries(obj));
+map // Map { foo: "bar", baz: 42 }
 
 
-console.log(2**10);// Output 1024
-console.log(Math.pow(2, 10)) // Output 1024
+// Object.getOwnPropertyDescriptors()
+// The Object.getOwnPropertyDescriptor method returns an object (descriptor). ES6 introduces the Object.getOwnPropertyDescriptors method, which returns the description object of all its own properties (non inherited properties) of the specified object.
+
+const obj = {
+  foo: 123,
+  get bar() { return 'abc' }
+};
+ 
+Object.getOwnPropertyDescriptors(obj)
+// { foo:
+//    { value: 123,
+//      writable: true,
+//      enumerable: true,
+//      configurable: true },
+//   bar:
+//    { get: [Function: bar],
+//      set: undefined,
+//      enumerable: true,
+//      configurable: true } }
+// In the above code, the Object.getOwnProperDescriptors method returns an object. The property names of all the original objects are the property names of the object, and the corresponding property values are the property description objects.
+// The main purpose of this method is to solve the problem that Object.assign() can't copy get and set attributes correctly.
+
+const source = {
+  set foo(value) {
+    console.log(value);
+  }
+};
+ 
+const target1 = {};
+Object.assign(target1, source);
+ 
+Object.getOwnPropertyDescriptor(target1, 'foo')
+// { value: undefined,
+//   writable: true,
+//   enumerable: true,
+//   configurable: true }
